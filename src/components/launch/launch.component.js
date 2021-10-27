@@ -7,10 +7,11 @@ import moment from "moment";
 function Launch(props) {
   const history = useHistory();
   const date = moment(props.date_utc).format("YYYY/MM/DD h:mm A");
-  console.log(date);
+
   function handleClick() {
     history.push({ pathname: `/launch/${props.id}` });
   }
+  
   return (
     <Card className="p-3">
       <Card.Img variant="top" src={props.links.patch.large} />

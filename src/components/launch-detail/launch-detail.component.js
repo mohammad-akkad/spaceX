@@ -16,46 +16,55 @@ export default class LaunchDetail extends Component {
     };
   }
 
+  componentWillMount() {
+    this.getLaunch();
+  }
+
   getLaunch() {
     const id = this.props.match.params.id || 1;
-    SpaceXDataService.getLaunchDetail(id).then(response => {
+    SpaceXDataService.getLaunchDetail(id).then((response) => {
       this.setState({
-        ...response.data
+        ...response.data,
       });
     });
   }
 
-  componentWillMount() {
-    this.getLaunch();
-  }
-  componentDidMount() {}
-
   render() {
     return (
-      <div >
+      <div>
         <Container>
-<div>
-        <img src={this.state.links?.patch.large} alt="picture" width="500"/></div>
-     <div style={{ backgroundColor: 'white', marginTop: '3%', padding: '5%' }}>
-          <Row>
-            <Col sm={2}>Name: </Col>
-            <Col sm={2}>{this.state.name}</Col>
-          </Row>
-          <Row>
-            <Col sm={2}>Details: </Col>
-            <Col sm={2}>{this.state.details}</Col>
-          </Row>
-          <Row>
-            <Col sm={2}>date: </Col>
-            <Col sm={2}>{ moment(this.state.date_utc).format("YYYY/MM/DD h:mm A")}</Col>
-          </Row>
-          <Row>
-            <Col sm={2}>Wikipedia: </Col>
-            <Col sm={2}><a href={this.state.links?.wikipedia}>Link</a></Col>
-          </Row>
+          <div>
+            <img
+              src={this.state.links?.patch.large}
+              alt="picture"
+              width="500"
+            />
+          </div>
+          <div
+            style={{ backgroundColor: "white", marginTop: "3%", padding: "5%" }}
+          >
+            <Row>
+              <Col sm={2}>Name: </Col>
+              <Col sm={2}>{this.state.name}</Col>
+            </Row>
+            <Row>
+              <Col sm={2}>Details: </Col>
+              <Col sm={2}>{this.state.details}</Col>
+            </Row>
+            <Row>
+              <Col sm={2}>date: </Col>
+              <Col sm={2}>
+                {moment(this.state.date_utc).format("YYYY/MM/DD h:mm A")}
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={2}>Wikipedia: </Col>
+              <Col sm={2}>
+                <a href={this.state.links?.wikipedia}>Link</a>
+              </Col>
+            </Row>
           </div>
         </Container>
-    
       </div>
     );
   }

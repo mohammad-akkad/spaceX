@@ -17,7 +17,7 @@ class SpaceXDataService {
   }
 
   getAllRockets() {
-    return http.get(`/rockets/`); 
+    return http.get(`/rockets/`);
   }
 }
 

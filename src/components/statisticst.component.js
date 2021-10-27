@@ -10,10 +10,9 @@ export default class Statistics extends Component {
     this.state = {
       allPersonsSentToSpace: "",
       totalLoadSentToSpace: "",
-      totalLoadByFalconSum: ""
+      totalLoadByFalconSum: "",
     };
   }
-
 
   componentDidMount() {
     this.getAllPersonsSentToSpace();
@@ -22,27 +21,29 @@ export default class Statistics extends Component {
     this.getAllLaunches();
   }
 
-  
   getAllPersonsSentToSpace() {
-    SpaceXDataService.getAllPersonsSentToSpace().then(response => {
+    SpaceXDataService.getAllPersonsSentToSpace().then((response) => {
       this.setState({ allPersonsSentToSpace: response.data.length });
     });
   }
 
   getTotalLoadSentToSpace() {
-    SpaceXDataService.getTotalLoadSentToSpace().then(response => {
+    SpaceXDataService.getTotalLoadSentToSpace().then((response) => {
       this.setState({
-        totalLoadSentToSpace: response.data.reduce((a, b) => +a + +b.mass_kg, 0)
+        totalLoadSentToSpace: response.data.reduce(
+          (a, b) => +a + +b.mass_kg,
+          0
+        ),
       });
     });
   }
 
   getAllRockets() {
-    SpaceXDataService.getAllRockets().then(response => {
+    SpaceXDataService.getAllRockets().then((response) => {
       let totalLoadByFalconSum = 0;
-      response.data.forEach(rocket => {
+      response.data.forEach((rocket) => {
         if (rocket.name.includes("Falcon")) {
-          rocket.payload_weights.forEach(payload => {
+          rocket.payload_weights.forEach((payload) => {
             totalLoadByFalconSum += payload.kg;
           });
         }
@@ -53,25 +54,24 @@ export default class Statistics extends Component {
   }
 
   getAllLaunches() {
-    SpaceXDataService.getAllLaunches().then(response => {
+    SpaceXDataService.getAllLaunches().then((response) => {
       let allLaunchesCount = response.data.length;
-      let successfulLaunchesCount = response.data.filter(launch => {
-        return launch.success === true
+      let successfulLaunchesCount = response.data.filter((launch) => {
+        return launch.success === true;
       }).length;
 
-      let successRate = (successfulLaunchesCount/allLaunchesCount) * 100
-  
+      let successRate = (successfulLaunchesCount / allLaunchesCount) * 100;
+
       this.setState({
         allSuccessfulLaunchesCount: successfulLaunchesCount,
         FailLaunchesCount: allLaunchesCount - successfulLaunchesCount,
-        successRate: successRate.toFixed(2)
+        successRate: successRate.toFixed(2),
       });
     });
   }
   render() {
     return (
-      
-      <Container style={{backgroundColor: "white",  padding: "5%"}}>
+      <Container style={{ backgroundColor: "white", padding: "5%" }}>
         <Row>
           <Col sm={4}>Number of People sent to space: </Col>
           <Col sm={2}>{this.state.allPersonsSentToSpace}</Col>
@@ -98,7 +98,6 @@ export default class Statistics extends Component {
           <Col sm={2}>{this.state.successRate}%</Col>
         </Row>
       </Container>
-
     );
   }
 }

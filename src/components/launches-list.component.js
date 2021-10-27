@@ -10,12 +10,19 @@ export default class LaunchesList extends Component {
     this.itemsCountPerPage = 20;
     this.state = { launches: [], info: {}, paginatedLaunches: [], active: 1 };
   }
+  componentWillMount() {
+    this.setState({ active: this.props.match.params.page || 1 });
+  }
 
+  componentDidMount() {
+    this.getLaunches();
+  }
+  
   getLaunches() {
-    SpaceXDataService.getAllLaunches().then(response => {
+    SpaceXDataService.getAllLaunches().then((response) => {
       this.setState({
         launches: response.data,
-        paginatedLaunches: this.reduceLaunches(response.data, 1)
+        paginatedLaunches: this.reduceLaunches(response.data, 1),
       });
     });
   }
@@ -23,7 +30,7 @@ export default class LaunchesList extends Component {
   handlePageChange(pageNumber) {
     this.setState({
       active: pageNumber,
-      paginatedLaunches: this.reduceLaunches(this.state.launches, pageNumber)
+      paginatedLaunches: this.reduceLaunches(this.state.launches, pageNumber),
     });
   }
 
@@ -34,20 +41,11 @@ export default class LaunchesList extends Component {
     );
   }
 
-  componentWillMount() {
-    this.setState({ active: this.props.match.params.page || 1 });
-  }
-
-  componentDidMount() {
-    this.getLaunches();
-  }
-
   render() {
     const { paginatedLaunches, launches, active } = this.state;
-    console.log(paginatedLaunches);
     const Launches = ({ paginatedLaunches }) => (
       <>
-        {paginatedLaunches.map(launch => (
+        {paginatedLaunches.map((launch) => (
           <Launch key={launch.id} {...launch}></Launch>
         ))}
       </>
