@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://rickandmortyapi.com/api/",
+  baseURL: "https://api.spacexdata.com/v4",
   headers: {
     "Content-type": "application/json"
   }

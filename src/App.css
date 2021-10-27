@@ -1,5 +1,13 @@
 .App {
   text-align: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  overflow: auto;
+  padding-bottom: 5%;
+  position: fixed;
 }
 
 .App-logo {

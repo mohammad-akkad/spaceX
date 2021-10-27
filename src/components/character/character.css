@@ -1,9 +1,0 @@
-.p-3 {
-  min-height: 300px;
-}
-
-.text {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
